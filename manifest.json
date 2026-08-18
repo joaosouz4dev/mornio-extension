@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Mornio",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Make every new tab count. Nova guia calma e premium: relogio, fusos, clima, favoritos, notas e citacoes.",
   "chrome_url_overrides": {
     "newtab": "newtab.html"
