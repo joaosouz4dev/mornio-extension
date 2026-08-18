@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -20,16 +20,21 @@ jobs:
         id: manifest
         run: echo "version=$(jq -r .version manifest.json)" >> "$GITHUB_OUTPUT"
 
-      - name: Validar tag contra o manifest
-        if: github.ref_type == 'tag'
+      - name: Verificar se a versao ja tem release
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if [ "v${{ steps.manifest.outputs.version }}" != "${{ github.ref_name }}" ]; then
-            echo "::error::Tag ${{ github.ref_name }} nao corresponde a versao do manifest (v${{ steps.manifest.outputs.version }})."
-            echo "Atualize a versao no manifest.json ou corrija a tag."
-            exit 1
+          if gh release view "v${{ steps.manifest.outputs.version }}" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "Release v${{ steps.manifest.outputs.version }} ja existe. Nada a fazer."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Versao nova: v${{ steps.manifest.outputs.version }}"
+            echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Gerar zip da extensao
+        if: steps.check.outputs.exists == 'false'
         run: |
           # Somente os arquivos que a extensao precisa (pronto para carregar no Chrome)
           zip -r "mornio-extension-v${{ steps.manifest.outputs.version }}.zip" \
@@ -40,7 +45,8 @@ jobs:
             icons
           unzip -l "mornio-extension-v${{ steps.manifest.outputs.version }}.zip"
 
-      - name: Publicar release
+      - name: Publicar tag e release
+        if: steps.check.outputs.exists == 'false'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.manifest.outputs.version }}
