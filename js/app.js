@@ -144,19 +144,30 @@ async function updateWeather(force = false) {
 // ---------- Fundo (crossfade entre duas camadas) ----------
 let bgActive = 0;
 
-function showBackground(url) {
+function showBackground(url, instant = false) {
   const layers = [$("bg-a"), $("bg-b")];
   const next = layers[1 - bgActive];
   const current = layers[bgActive];
 
   const img = new Image();
   img.onload = () => {
+    // Na abertura da guia a foto ja esta no cache: mostra sem fade,
+    // para nao expor o gradiente de fallback. O crossfade fica para trocas.
+    if (instant) {
+      next.style.transition = "none";
+      current.style.transition = "none";
+    }
     next.style.backgroundImage = `url("${url}")`;
     next.classList.add("visible");
     current.classList.remove("visible");
+    if (instant) {
+      void next.offsetWidth;
+      next.style.transition = "";
+      current.style.transition = "";
+    }
     bgActive = 1 - bgActive;
   };
-  // Se falhar (offline), mantém o gradiente do body
+  // Se falhar (offline), mantém o gradiente do html
   img.src = url;
 }
 
@@ -168,7 +179,7 @@ function setBackground(force = false) {
     saved = { id, date: todayKey() };
     store.set("photo", saved);
   }
-  showBackground(`https://picsum.photos/id/${saved.id}/1920/1080`);
+  showBackground(`https://picsum.photos/id/${saved.id}/1920/1080`, !force);
 }
 
 // ---------- Citação ----------

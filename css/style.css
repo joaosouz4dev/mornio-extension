@@ -30,9 +30,10 @@
 }
 
 /* Gradiente de fallback no html (fundo do canvas): fica ATRÁS das
-   camadas de foto, que usam z-index negativo. No body ele cobriria as fotos. */
+   camadas de foto, que usam z-index negativo. No body ele cobriria as fotos.
+   Tom escuro neutro para não "vazar" cor na abertura da guia. */
 html {
-  background: linear-gradient(160deg, #1c2740 0%, #33465f 50%, #5c4f3d 100%);
+  background: linear-gradient(160deg, #141418 0%, #1c1c22 55%, #24242b 100%);
 }
 
 html, body {
