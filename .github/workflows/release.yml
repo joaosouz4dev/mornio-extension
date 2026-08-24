@@ -12,6 +12,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      CWS_EXTENSION_ID: ${{ secrets.CWS_EXTENSION_ID }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -53,3 +55,17 @@ jobs:
           name: Mornio v${{ steps.manifest.outputs.version }}
           files: mornio-extension-v${{ steps.manifest.outputs.version }}.zip
           generate_release_notes: true
+
+      # Requer os segredos CWS_EXTENSION_ID, CWS_CLIENT_ID, CWS_CLIENT_SECRET
+      # e CWS_REFRESH_TOKEN configurados no repositorio. Sem eles, e pulado.
+      - name: Publicar na Chrome Web Store
+        if: steps.check.outputs.exists == 'false' && env.CWS_EXTENSION_ID != ''
+        env:
+          EXTENSION_ID: ${{ secrets.CWS_EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CWS_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CWS_CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.CWS_REFRESH_TOKEN }}
+        run: |
+          npx --yes chrome-webstore-upload-cli@3 upload \
+            --source "mornio-extension-v${{ steps.manifest.outputs.version }}.zip" \
+            --auto-publish
