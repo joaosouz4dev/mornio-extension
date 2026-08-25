@@ -109,7 +109,7 @@ function renderWorldClocks() {
         minute: "2-digit",
         timeZone: z.tz
       }).format(now);
-      return `<div class="wclock"><div class="wclock-time">${ICONS.globe}${time}</div><div class="wclock-label">${z.label}</div></div>`;
+      return `<div class="wclock"><div class="wclock-icon">${ICONS.globe}</div><div class="wclock-time">${time}</div><div class="wclock-label">${z.label}</div></div>`;
     })
     .join("");
 }

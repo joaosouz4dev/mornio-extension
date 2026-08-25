@@ -25,8 +25,11 @@
   --radius-sm: 10px;
 
   /* Espaçamento do layout */
-  --pad-x: 28px;
-  --pad-y: 20px;
+  --pad-x: 44px;
+  --pad-y: 32px;
+
+  /* Divisórias da barra superior */
+  --divider: rgba(255, 255, 255, 0.35);
 }
 
 /* Gradiente de fallback no html (fundo do canvas): fica ATRÁS das
@@ -246,7 +249,7 @@ button {
 
 .topbar-left {
   display: flex;
-  gap: 8px;
+  gap: 20px;
 }
 
 .quick-item {
@@ -282,66 +285,73 @@ button {
 }
 
 .quick-item svg {
-  width: 22px;
-  height: 22px;
+  width: 25px;
+  height: 25px;
 }
 
 .quick-item span {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
 }
 
 .topbar-right {
   display: flex;
-  align-items: flex-start;
-  gap: 28px;
+  align-items: stretch;
 }
 
 .world-clocks {
   display: flex;
-  gap: 28px;
+  align-items: stretch;
 }
 
 .wclock {
   text-align: center;
   text-shadow: var(--shadow);
+  padding: 2px 28px;
 }
 
-.wclock-time {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 19px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+.wclock:first-child {
+  padding-left: 0;
 }
 
-.wclock-time svg {
-  width: 17px;
-  height: 17px;
-  flex: none;
+.wclock + .wclock {
+  border-left: 1px solid var(--divider);
+}
+
+.wclock-icon {
+  width: 20px;
+  height: 20px;
+  margin: 0 auto 8px;
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
 }
 
+.wclock-time {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
 .wclock-label {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text-dim);
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .weather {
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 12px;
   color: var(--text);
   text-shadow: var(--shadow);
+  border-left: 1px solid var(--divider);
+  padding: 2px 0 2px 28px;
 }
 
 .weather-icon {
-  width: 26px;
-  height: 26px;
+  width: 38px;
+  height: 38px;
   display: block;
   filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
 }
@@ -353,14 +363,14 @@ button {
 }
 
 .weather-temp {
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 600;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
 
 .weather-city {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--text-dim);
 }
@@ -422,9 +432,10 @@ button {
 }
 
 .quote {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  max-width: 560px;
+  line-height: 1.5;
+  max-width: 520px;
   margin: 0 auto;
   cursor: default;
 }
@@ -433,9 +444,9 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--text-dim);
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
 .quote-skip {
@@ -1080,5 +1091,10 @@ button {
 
   .world-clocks {
     display: none;
+  }
+
+  .weather {
+    border-left: none;
+    padding-left: 0;
   }
 }
