@@ -7,15 +7,14 @@ const DEFAULTS = {
   zones: [
     { label: "Bogotá", tz: "America/Bogota" },
     { label: "Boston", tz: "America/New_York" },
-    { label: "Portugal", tz: "Europe/Lisbon" },
-    { label: "Londres", tz: "Europe/London" }
+    { label: "Portugal", tz: "Europe/Lisbon" }
   ]
 };
 
 // IDs de fotos cênicas do Lorem Picsum (fonte: Unsplash)
 const PHOTO_IDS = [1015, 1016, 1018, 1019, 1021, 1022, 1036, 1039, 1043, 1053, 1061, 110];
 
-const QUOTES = [
+const QUOTES_PT = [
   { t: "Transforme seus obstáculos em oportunidades e seus problemas em possibilidades.", a: "Roy T. Bennett" },
   { t: "A disciplina é a ponte entre metas e realizações.", a: "Jim Rohn" },
   { t: "Feito é melhor que perfeito.", a: "Sheryl Sandberg" },
@@ -31,6 +30,129 @@ const QUOTES = [
   { t: "A ação é a chave fundamental para todo sucesso.", a: "Pablo Picasso" },
   { t: "Quem quer, encontra um meio. Quem não quer, encontra uma desculpa.", a: "Provérbio árabe" }
 ];
+
+const QUOTES_EN = [
+  { t: "Turn your obstacles into opportunities and your problems into possibilities.", a: "Roy T. Bennett" },
+  { t: "Discipline is the bridge between goals and accomplishment.", a: "Jim Rohn" },
+  { t: "Done is better than perfect.", a: "Sheryl Sandberg" },
+  { t: "The best way to predict the future is to create it.", a: "Peter Drucker" },
+  { t: "You don't have to be great to start, but you have to start to be great.", a: "Zig Ziglar" },
+  { t: "Success is the sum of small efforts repeated day in and day out.", a: "Robert Collier" },
+  { t: "Simplicity is the ultimate sophistication.", a: "Leonardo da Vinci" },
+  { t: "Don't count the days, make the days count.", a: "Muhammad Ali" },
+  { t: "Energy and persistence conquer all things.", a: "Benjamin Franklin" },
+  { t: "Focusing is about saying no to a thousand good things.", a: "Steve Jobs" },
+  { t: "Learning never exhausts the mind.", a: "Leonardo da Vinci" },
+  { t: "Great things never came from comfort zones.", a: "Anonymous" },
+  { t: "Action is the foundational key to all success.", a: "Pablo Picasso" },
+  { t: "Where there is a will, there is a way.", a: "Proverb" }
+];
+
+// ---------- Idiomas ----------
+const I18N = {
+  pt: {
+    locale: "pt-BR",
+    tasks: "Tarefas",
+    notes: "Notas",
+    photo: "Foto",
+    changePhoto: "Trocar foto de fundo",
+    settings: "Configurações",
+    close: "Fechar",
+    notesPlaceholder: "Escreva suas anotações aqui... (salvas automaticamente)",
+    taskPlaceholder: "Nova tarefa... (Enter para adicionar)",
+    noTasks: "Nenhuma tarefa ainda.",
+    complete: "Concluir",
+    removeTask: "Remover",
+    yourName: "Seu nome",
+    weatherCity: "Cidade do clima",
+    cityPlaceholder: "Digite para buscar... Ex.: Carangola",
+    worldClocks: "Relógios mundiais",
+    max6: "máx. 6",
+    zonePlaceholder: "Buscar fuso... Ex.: Sao Paulo, Tokyo",
+    bookmarksTitle: "Barra de favoritos",
+    bookmarksDesc: "Exibe seus favoritos do Chrome no topo da página",
+    language: "Idioma",
+    cancel: "Cancelar",
+    save: "Salvar",
+    createdBy: "criado por",
+    searching: "Buscando cidade...",
+    cityNotFound: "Cidade não encontrada, mantendo a anterior.",
+    cityError: "Erro ao buscar cidades. Verifique a conexão.",
+    chooseCity: "Escolha uma cidade da lista antes de salvar.",
+    selected: "Selecionado",
+    maxClocks: "Máximo de 6 relógios.",
+    noCityResults: "Nenhuma cidade encontrada",
+    noZoneResults: "Nenhum fuso encontrado",
+    now: "agora",
+    emptyFolder: "Pasta vazia",
+    noBookmarks: "Sem favoritos na barra",
+    bookmarksPermission: "Para exibir os favoritos, recarregue a extensão em chrome://extensions e aceite a permissão.",
+    changeQuote: "Trocar frase",
+    removeZone: "Remover",
+    folder: "Pasta",
+    greetings: ["Boa madrugada", "Bom dia", "Boa tarde", "Boa noite"],
+    quotes: QUOTES_PT
+  },
+  en: {
+    locale: "en-GB",
+    tasks: "Tasks",
+    notes: "Notes",
+    photo: "Photo",
+    changePhoto: "Change background photo",
+    settings: "Settings",
+    close: "Close",
+    notesPlaceholder: "Write your notes here... (saved automatically)",
+    taskPlaceholder: "New task... (Enter to add)",
+    noTasks: "No tasks yet.",
+    complete: "Complete",
+    removeTask: "Remove",
+    yourName: "Your name",
+    weatherCity: "Weather city",
+    cityPlaceholder: "Type to search... e.g. London",
+    worldClocks: "World clocks",
+    max6: "max. 6",
+    zonePlaceholder: "Search timezone... e.g. Sao Paulo, Tokyo",
+    bookmarksTitle: "Bookmarks bar",
+    bookmarksDesc: "Shows your Chrome bookmarks at the top of the page",
+    language: "Language",
+    cancel: "Cancel",
+    save: "Save",
+    createdBy: "created by",
+    searching: "Searching city...",
+    cityNotFound: "City not found, keeping the previous one.",
+    cityError: "Error searching cities. Check your connection.",
+    chooseCity: "Pick a city from the list before saving.",
+    selected: "Selected",
+    maxClocks: "Maximum of 6 clocks.",
+    noCityResults: "No cities found",
+    noZoneResults: "No timezones found",
+    now: "now",
+    emptyFolder: "Empty folder",
+    noBookmarks: "No bookmarks in the bar",
+    bookmarksPermission: "To show bookmarks, reload the extension at chrome://extensions and accept the permission.",
+    changeQuote: "Change quote",
+    removeZone: "Remove",
+    folder: "Folder",
+    greetings: ["Good night", "Good morning", "Good afternoon", "Good evening"],
+    quotes: QUOTES_EN
+  }
+};
+
+let lang = "pt";
+const t = (key) => (I18N[lang] || I18N.pt)[key];
+
+function applyI18n() {
+  document.documentElement.lang = lang === "en" ? "en" : "pt-BR";
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    el.placeholder = t(el.dataset.i18nPlaceholder);
+  });
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    el.title = t(el.dataset.i18nTitle);
+  });
+}
 
 // ---------- Ícones SVG (traço branco, estilo linha) ----------
 const svg = (inner, vb = "0 0 24 24") =>
@@ -64,8 +186,44 @@ function weatherIcon(code) {
 }
 
 // ---------- Armazenamento ----------
+// Na extensao usa chrome.storage.local (sobrevive a atualizacoes e nao sofre
+// limpeza de site data). Fora dela (testes locais), cai para localStorage.
+// Leituras sao sincronas via cache em memoria carregado no init.
+const hasChromeStorage =
+  typeof chrome !== "undefined" && chrome.storage && chrome.storage.local;
+
+let storeCache = {};
+
+async function initStore() {
+  if (!hasChromeStorage) return;
+  storeCache = await chrome.storage.local.get(null);
+
+  // Migra dados antigos do localStorage (chaves "painel:*") uma unica vez
+  const pendentes = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith("painel:")) {
+      const nome = k.slice("painel:".length);
+      if (!(nome in storeCache)) {
+        try {
+          pendentes[nome] = JSON.parse(localStorage.getItem(k));
+        } catch {
+          /* valor invalido: ignora */
+        }
+      }
+    }
+  }
+  if (Object.keys(pendentes).length > 0) {
+    Object.assign(storeCache, pendentes);
+    await chrome.storage.local.set(pendentes);
+  }
+}
+
 const store = {
   get(key, fallback) {
+    if (hasChromeStorage) {
+      return key in storeCache ? storeCache[key] : fallback;
+    }
     try {
       const raw = localStorage.getItem("painel:" + key);
       return raw === null ? fallback : JSON.parse(raw);
@@ -74,9 +232,19 @@ const store = {
     }
   },
   set(key, value) {
+    if (hasChromeStorage) {
+      storeCache[key] = value;
+      chrome.storage.local.set({ [key]: value });
+      return;
+    }
     localStorage.setItem("painel:" + key, JSON.stringify(value));
   },
   remove(key) {
+    if (hasChromeStorage) {
+      delete storeCache[key];
+      chrome.storage.local.remove(key);
+      return;
+    }
     localStorage.removeItem("painel:" + key);
   }
 };
@@ -87,14 +255,16 @@ const todayKey = () => new Date().toISOString().slice(0, 10);
 // ---------- Relógio e saudação ----------
 function updateClock() {
   const now = new Date();
-  $("clock").textContent = now.toLocaleTimeString("pt-BR", {
+  $("clock").textContent = now.toLocaleTimeString(t("locale"), {
     hour: "2-digit",
-    minute: "2-digit"
+    minute: "2-digit",
+    hour12: false
   });
 
   const h = now.getHours();
   const name = store.get("name", DEFAULTS.name);
-  const greeting = h < 6 ? "Boa madrugada" : h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite";
+  const greetings = t("greetings");
+  const greeting = h < 6 ? greetings[0] : h < 12 ? greetings[1] : h < 18 ? greetings[2] : greetings[3];
   $("greeting").textContent = `${greeting}, ${name}.`;
 }
 
@@ -104,9 +274,10 @@ function renderWorldClocks() {
   const now = new Date();
   $("world-clocks").innerHTML = zones
     .map((z) => {
-      const time = new Intl.DateTimeFormat("pt-BR", {
+      const time = new Intl.DateTimeFormat(t("locale"), {
         hour: "2-digit",
         minute: "2-digit",
+        hour12: false,
         timeZone: z.tz
       }).format(now);
       return `<div class="wclock"><div class="wclock-icon">${ICONS.globe}</div><div class="wclock-time">${time}</div><div class="wclock-label">${z.label}</div></div>`;
@@ -189,19 +360,20 @@ function currentQuoteIndex() {
 
   const start = new Date(new Date().getFullYear(), 0, 0);
   const dayOfYear = Math.floor((Date.now() - start.getTime()) / 86400000);
-  return dayOfYear % QUOTES.length;
+  return dayOfYear % t("quotes").length;
 }
 
 function renderQuote() {
   const idx = currentQuoteIndex();
-  const q = QUOTES[idx];
+  const quotes = t("quotes");
+  const q = quotes[idx % quotes.length];
   $("quote").textContent = `“${q.t}”`;
   $("quote-author").innerHTML =
-    `${q.a} <button id="quote-skip" class="quote-skip" title="Trocar frase">${ICONS.skip}</button>`;
+    `${q.a} <button id="quote-skip" class="quote-skip" title="${t("changeQuote")}">${ICONS.skip}</button>`;
 
   $("quote-skip").addEventListener("click", () => {
     let next = idx;
-    while (next === idx) next = Math.floor(Math.random() * QUOTES.length);
+    while (next === idx) next = Math.floor(Math.random() * quotes.length);
     store.set("quote", { date: todayKey(), idx: next });
 
     const box = document.querySelector(".bottom-center");
@@ -231,17 +403,17 @@ function renderTasks(highlightLast = false) {
   const list = $("tasks-list");
 
   if (tasks.length === 0) {
-    list.innerHTML = '<li class="tasks-empty">Nenhuma tarefa ainda.</li>';
+    list.innerHTML = `<li class="tasks-empty">${t("noTasks")}</li>`;
     return;
   }
 
   list.innerHTML = tasks
     .map(
-      (t, i) => `
-      <li class="task-item ${t.done ? "done" : ""}" data-i="${i}">
-        <input type="checkbox" ${t.done ? "checked" : ""} title="Concluir">
+      (task, i) => `
+      <li class="task-item ${task.done ? "done" : ""}" data-i="${i}">
+        <input type="checkbox" ${task.done ? "checked" : ""} title="${t("complete")}">
         <span></span>
-        <button class="task-del" title="Remover">${ICONS.x}</button>
+        <button class="task-del" title="${t("removeTask")}">${ICONS.x}</button>
       </li>`
     )
     .join("");
@@ -352,7 +524,7 @@ function buildBookmarkNodes(nodes, inDropdown) {
     btn.className = "bm-folder";
     btn.type = "button";
     btn.innerHTML = `<span class="bm-icon">${ICONS.folder}</span><span></span>`;
-    btn.querySelector("span:nth-of-type(2)").textContent = node.title || "Pasta";
+    btn.querySelector("span:nth-of-type(2)").textContent = node.title || t("folder");
     wrap.appendChild(btn);
 
     btn.addEventListener("click", (e) => {
@@ -386,7 +558,7 @@ function buildBookmarkNodes(nodes, inDropdown) {
       drop.className = "bm-dropdown";
       const children = node.children || [];
       if (children.length === 0) {
-        drop.innerHTML = '<div class="bm-empty">Pasta vazia</div>';
+        drop.innerHTML = `<div class="bm-empty">${t("emptyFolder")}</div>`;
       } else {
         drop.appendChild(buildBookmarkNodes(children, true));
       }
@@ -416,8 +588,7 @@ async function renderBookmarksBar() {
 
   if (!chrome.bookmarks) {
     // Permissão ainda não concedida: manifest novo exige recarregar a extensão
-    bar.innerHTML =
-      '<div class="bm-empty">Para exibir os favoritos, recarregue a extensão em chrome://extensions e aceite a permissão.</div>';
+    bar.innerHTML = `<div class="bm-empty">${t("bookmarksPermission")}</div>`;
     bar.classList.remove("hidden");
     return;
   }
@@ -431,7 +602,7 @@ async function renderBookmarksBar() {
 
     bar.innerHTML = "";
     if (items.length === 0) {
-      bar.innerHTML = '<div class="bm-empty">Sem favoritos na barra</div>';
+      bar.innerHTML = `<div class="bm-empty">${t("noBookmarks")}</div>`;
     } else {
       bar.appendChild(buildBookmarkNodes(items, false));
     }
@@ -465,7 +636,7 @@ function renderZonesDraft() {
     label.title = z.tz;
     const del = document.createElement("button");
     del.type = "button";
-    del.title = `Remover ${z.label}`;
+    del.title = `${t("removeZone")} ${z.label}`;
     del.innerHTML = ICONS.x;
     del.addEventListener("click", () => {
       zonesDraft.splice(i, 1);
@@ -482,16 +653,17 @@ function renderZoneResults(query) {
   const matches = TZ_LIST.filter((tz) => normalize(tz).includes(q)).slice(0, 6);
 
   if (matches.length === 0) {
-    list.innerHTML = '<li class="city-option" aria-disabled="true">Nenhum fuso encontrado</li>';
+    list.innerHTML = `<li class="city-option" aria-disabled="true">${t("noZoneResults")}</li>`;
     list.classList.remove("hidden");
     return;
   }
 
   list.innerHTML = "";
   matches.forEach((tz) => {
-    const time = new Intl.DateTimeFormat("pt-BR", {
+    const time = new Intl.DateTimeFormat(t("locale"), {
       hour: "2-digit",
       minute: "2-digit",
+      hour12: false,
       timeZone: tz
     }).format(new Date());
 
@@ -502,10 +674,10 @@ function renderZoneResults(query) {
     btn.className = "city-option";
     btn.innerHTML = `<strong></strong><small></small>`;
     btn.querySelector("strong").textContent = tzLabel(tz);
-    btn.querySelector("small").textContent = `${tz} · agora ${time}`;
+    btn.querySelector("small").textContent = `${tz} · ${t("now")} ${time}`;
     btn.addEventListener("click", () => {
       if (zonesDraft.length >= 6) {
-        $("set-city-status").textContent = "Máximo de 6 relógios.";
+        $("set-city-status").textContent = t("maxClocks");
       } else if (!zonesDraft.some((z) => z.tz === tz)) {
         zonesDraft.push({ label: tzLabel(tz), tz });
         renderZonesDraft();
@@ -549,7 +721,7 @@ function renderCityResults(results) {
   const list = $("city-results");
 
   if (!results || results.length === 0) {
-    list.innerHTML = '<li class="city-option" aria-disabled="true">Nenhuma cidade encontrada</li>';
+    list.innerHTML = `<li class="city-option" aria-disabled="true">${t("noCityResults")}</li>`;
     list.classList.remove("hidden");
     return;
   }
@@ -568,7 +740,7 @@ function renderCityResults(results) {
     btn.addEventListener("click", () => {
       selectedCity = { name: r.name, lat: r.latitude, lon: r.longitude };
       $("set-city").value = detail ? `${r.name}, ${detail}` : r.name;
-      $("set-city-status").textContent = `Selecionado: ${r.name} (${r.latitude.toFixed(2)}, ${r.longitude.toFixed(2)})`;
+      $("set-city-status").textContent = `${t("selected")}: ${r.name} (${r.latitude.toFixed(2)}, ${r.longitude.toFixed(2)})`;
       hideCityResults();
     });
     li.appendChild(btn);
@@ -581,12 +753,12 @@ function renderCityResults(results) {
 
 async function searchCity(query) {
   try {
-    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=pt`;
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=5&language=${lang}`;
     const res = await fetch(url);
     const data = await res.json();
     renderCityResults(data.results || []);
   } catch {
-    $("set-city-status").textContent = "Erro ao buscar cidades. Verifique a conexão.";
+    $("set-city-status").textContent = t("cityError");
     hideCityResults();
   }
 }
@@ -630,6 +802,7 @@ function bindSettings() {
   $("btn-settings").addEventListener("click", () => {
     const city = store.get("city", DEFAULTS.city);
     $("set-name").value = store.get("name", DEFAULTS.name);
+    $("set-lang").value = lang;
     $("set-city").value = city.name;
     $("set-city-status").textContent = "";
     $("set-bookmarks").checked = store.get("showBookmarks", true);
@@ -661,7 +834,7 @@ function bindSettings() {
       const typed = $("set-city").value.trim();
       const current = store.get("city", DEFAULTS.city);
       if (typed && typed.toLowerCase() !== current.name.toLowerCase()) {
-        $("set-city-status").textContent = "Escolha uma cidade da lista antes de salvar.";
+        $("set-city-status").textContent = t("chooseCity");
         return;
       }
     }
@@ -669,8 +842,17 @@ function bindSettings() {
     store.set("zones", zonesDraft);
     store.set("showBookmarks", $("set-bookmarks").checked);
 
+    const novoIdioma = $("set-lang").value;
+    if (novoIdioma !== lang && I18N[novoIdioma]) {
+      lang = novoIdioma;
+      store.set("lang", lang);
+    }
+
+    applyI18n();
     updateClock();
     renderWorldClocks();
+    renderQuote();
+    renderTasks();
     renderBookmarksBar();
     updateWeather(true);
     modal.classList.add("hidden");
@@ -692,7 +874,12 @@ function bindGlobal() {
 }
 
 // ---------- Inicialização ----------
-function init() {
+async function init() {
+  await initStore();
+  lang = store.get("lang", "pt");
+  if (!I18N[lang]) lang = "pt";
+  applyI18n();
+
   updateClock();
   renderWorldClocks();
   renderQuote();

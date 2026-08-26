@@ -24,17 +24,17 @@
     <!-- Barra superior -->
     <header class="topbar">
       <div class="topbar-left">
-        <button id="btn-tasks" class="quick-item" title="Tarefas">
+        <button id="btn-tasks" class="quick-item" title="Tarefas" data-i18n-title="tasks">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 14v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          <span>Tarefas</span>
+          <span data-i18n="tasks">Tarefas</span>
         </button>
-        <button id="btn-notes-top" class="quick-item" title="Notas">
+        <button id="btn-notes-top" class="quick-item" title="Notas" data-i18n-title="notes">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          <span>Notas</span>
+          <span data-i18n="notes">Notas</span>
         </button>
-        <button id="btn-shuffle" class="quick-item" title="Trocar foto de fundo">
+        <button id="btn-shuffle" class="quick-item" title="Trocar foto de fundo" data-i18n-title="changePhoto">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>Foto</span>
+          <span data-i18n="photo">Foto</span>
         </button>
       </div>
       <div class="topbar-right">
@@ -59,7 +59,7 @@
     <!-- Rodapé -->
     <footer class="bottombar">
       <div class="bottom-left">
-        <button id="btn-settings" class="icon-btn" title="Configurações">
+        <button id="btn-settings" class="icon-btn" title="Configurações" data-i18n-title="settings">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         </button>
       </div>
@@ -68,7 +68,7 @@
         <p id="quote-author" class="quote-author"></p>
       </div>
       <div class="bottom-right">
-        <button id="btn-notes" class="text-btn">Notas</button>
+        <button id="btn-notes" class="text-btn" data-i18n="notes">Notas</button>
       </div>
     </footer>
   </main>
@@ -76,23 +76,23 @@
   <!-- Painel de notas -->
   <aside id="notes-panel" class="side-panel side-panel-right">
     <div class="panel-header">
-      <h3>Notas</h3>
-      <button id="notes-close" class="icon-btn" title="Fechar">
+      <h3 data-i18n="notes">Notas</h3>
+      <button id="notes-close" class="icon-btn" title="Fechar" data-i18n-title="close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <textarea id="notes-text" class="notes-text" placeholder="Escreva suas anotações aqui... (salvas automaticamente)"></textarea>
+    <textarea id="notes-text" class="notes-text" placeholder="Escreva suas anotações aqui... (salvas automaticamente)" data-i18n-placeholder="notesPlaceholder"></textarea>
   </aside>
 
   <!-- Painel de tarefas -->
   <aside id="tasks-panel" class="side-panel side-panel-left">
     <div class="panel-header">
-      <h3>Tarefas</h3>
-      <button id="tasks-close" class="icon-btn" title="Fechar">
+      <h3 data-i18n="tasks">Tarefas</h3>
+      <button id="tasks-close" class="icon-btn" title="Fechar" data-i18n-title="close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <input id="task-input" class="task-input" type="text" maxlength="120" placeholder="Nova tarefa... (Enter para adicionar)" autocomplete="off">
+    <input id="task-input" class="task-input" type="text" maxlength="120" placeholder="Nova tarefa... (Enter para adicionar)" autocomplete="off" data-i18n-placeholder="taskPlaceholder">
     <ul id="tasks-list" class="tasks-list"></ul>
   </aside>
 
@@ -100,40 +100,48 @@
   <div id="settings-modal" class="modal hidden">
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="settings-title">
       <div class="modal-header">
-        <h3 id="settings-title">Configurações</h3>
-        <button id="set-close" class="icon-btn" title="Fechar">
+        <h3 id="settings-title" data-i18n="settings">Configurações</h3>
+        <button id="set-close" class="icon-btn" title="Fechar" data-i18n-title="close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
 
       <div class="modal-body">
         <label class="field">
-          <span>Seu nome</span>
+          <span data-i18n="yourName">Seu nome</span>
           <input id="set-name" type="text" maxlength="40" autocomplete="off">
         </label>
 
+        <label class="field">
+          <span data-i18n="language">Idioma</span>
+          <select id="set-lang">
+            <option value="pt">Português (Brasil)</option>
+            <option value="en">English</option>
+          </select>
+        </label>
+
         <div class="field">
-          <span>Cidade do clima</span>
+          <span data-i18n="weatherCity">Cidade do clima</span>
           <div class="city-search">
-            <input id="set-city" type="text" placeholder="Digite para buscar... Ex.: Carangola" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="city-results">
+            <input id="set-city" type="text" placeholder="Digite para buscar... Ex.: Carangola" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="city-results" data-i18n-placeholder="cityPlaceholder">
             <ul id="city-results" class="city-results hidden" role="listbox"></ul>
           </div>
           <p id="set-city-status" class="field-status"></p>
         </div>
 
         <div class="field">
-          <span>Relógios mundiais <em class="field-hint">máx. 6</em></span>
+          <span><span data-i18n="worldClocks">Relógios mundiais</span> <em class="field-hint" data-i18n="max6">máx. 6</em></span>
           <div id="zones-list" class="zones-list"></div>
           <div class="city-search">
-            <input id="zone-input" type="text" placeholder="Buscar fuso... Ex.: Sao Paulo, Tokyo" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="zone-results">
+            <input id="zone-input" type="text" placeholder="Buscar fuso... Ex.: Sao Paulo, Tokyo" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="zone-results" data-i18n-placeholder="zonePlaceholder">
             <ul id="zone-results" class="city-results hidden" role="listbox"></ul>
           </div>
         </div>
 
         <div class="field field-row">
           <div class="field-row-text">
-            <strong>Barra de favoritos</strong>
-            <small>Exibe seus favoritos do Chrome no topo da página</small>
+            <strong data-i18n="bookmarksTitle">Barra de favoritos</strong>
+            <small data-i18n="bookmarksDesc">Exibe seus favoritos do Chrome no topo da página</small>
           </div>
           <label class="switch">
             <input id="set-bookmarks" type="checkbox">
@@ -143,15 +151,15 @@
       </div>
 
       <div class="modal-footer">
-        <button id="set-cancel" class="btn-secondary">Cancelar</button>
-        <button id="set-save" class="btn-primary">Salvar</button>
+        <button id="set-cancel" class="btn-secondary" data-i18n="cancel">Cancelar</button>
+        <button id="set-save" class="btn-primary" data-i18n="save">Salvar</button>
       </div>
 
       <div class="modal-brand">
         <img src="icons/icon-48.png" alt="" class="brand-logo">
         <span class="brand-name">Mornio</span>
         <span class="brand-sep">·</span>
-        <span>criado por <a href="https://joaovictorsouza.dev" target="_blank" rel="noopener">joaovictorsouza.dev</a></span>
+        <span><span data-i18n="createdBy">criado por</span> <a href="https://joaovictorsouza.dev" target="_blank" rel="noopener">joaovictorsouza.dev</a></span>
       </div>
     </div>
   </div>

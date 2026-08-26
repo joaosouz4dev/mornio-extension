@@ -15,7 +15,8 @@ Extensão de nova guia para Chrome/Edge/Brave: relógio grande, saudação perso
 
 - **Relógio e saudação**: hora local em destaque e saudação com seu nome (Bom dia / Boa tarde / Boa noite), fonte Poppins.
 - **Atalhos no topo**: Tarefas, Notas e Foto no canto superior esquerdo, com ícones brancos em estilo linha.
-- **Fusos horários**: configuráveis nas Configurações; busque qualquer fuso IANA (ex.: Sao Paulo, Tokyo) e adicione/remova até 6 relógios. Padrão: Bogotá, Boston, Portugal e Londres.
+- **Fusos horários**: configuráveis nas Configurações; busque qualquer fuso IANA (ex.: Sao Paulo, Tokyo) e adicione/remova até 6 relógios. Padrão: Bogotá, Boston e Portugal.
+- **Idioma**: interface em Português (Brasil) ou English, com citações no idioma escolhido; troque nas Configurações.
 - **Barra de favoritos**: exibe os favoritos reais do Chrome no topo, em estilo compacto como a barra nativa, com favicons e pastas em dropdown (incluindo subpastas). Pode ser ligada/desligada nas Configurações.
 - **Clima**: temperatura atual da cidade configurada, via Open-Meteo (sem chave de API), com ícone por condição.
 - **Tarefas**: painel lateral esquerdo com lista de tarefas (adicionar, concluir, remover).
@@ -25,7 +26,7 @@ Extensão de nova guia para Chrome/Edge/Brave: relógio grande, saudação perso
 - **Configurações**: engrenagem no canto inferior esquerdo. Nome, cidade do clima (busca com autocomplete e resultados reais de geocodificação), relógios mundiais e barra de favoritos.
 - **Efeitos**: entrada escalonada dos elementos, crossfade entre fotos de fundo com leve zoom (Ken Burns), painéis de vidro (blur + saturação), micro-interações de hover/press e transição suave na troca de frase. Tudo respeita `prefers-reduced-motion`.
 
-Tudo é salvo localmente no navegador (localStorage). Nenhum dado sai da sua máquina, exceto as consultas de clima e as imagens de fundo.
+Tudo é salvo localmente no navegador via `chrome.storage.local`, que sobrevive a atualizações da extensão (dados antigos em localStorage são migrados automaticamente). Nenhum dado sai da sua máquina, exceto as consultas de clima e as imagens de fundo.
 
 ## Como instalar
 
