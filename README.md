@@ -22,7 +22,7 @@ Extensão de nova guia para Chrome/Edge/Brave: relógio grande, saudação perso
 - **Tarefas**: painel lateral esquerdo com lista de tarefas (adicionar, concluir, remover).
 - **Notas**: painel lateral direito com salvamento automático.
 - **Citação diária**: frase motivacional em português que muda a cada dia; passe o mouse sobre a frase para trocar por outra.
-- **Foto de fundo**: imagem cênica nova por dia (Lorem Picsum), com botão "Foto" para trocar na hora. Se estiver offline, usa um gradiente.
+- **Foto de fundo**: imagem cênica nova por dia com três provedores gratuitos e fallback automático (Bing Wallpaper, Picsum e LoremFlickr); botão "Foto" para trocar na hora. Nas Configurações dá para escolher o provedor, ver o status online/fora do ar de cada um e marcar temas favoritos (natureza, montanhas, praia...) usados na busca por tema. Se tudo estiver offline, usa um gradiente.
 - **Configurações**: engrenagem no canto inferior esquerdo. Nome, cidade do clima (busca com autocomplete e resultados reais de geocodificação), relógios mundiais e barra de favoritos.
 - **Efeitos**: entrada escalonada dos elementos, crossfade entre fotos de fundo com leve zoom (Ken Burns), painéis de vidro (blur + saturação), micro-interações de hover/press e transição suave na troca de frase. Tudo respeita `prefers-reduced-motion`.
 

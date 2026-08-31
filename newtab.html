@@ -138,6 +138,19 @@
           </div>
         </div>
 
+        <div class="field">
+          <span data-i18n="photoSection">Foto de fundo</span>
+          <select id="set-provider">
+            <option value="auto" data-i18n="providerAuto">Automático (com fallback)</option>
+            <option value="bing">Bing Wallpaper</option>
+            <option value="picsum">Picsum</option>
+            <option value="flickr">LoremFlickr</option>
+          </select>
+          <div id="providers-status" class="providers-status"></div>
+          <span class="sub-label"><span data-i18n="favoriteThemes">Temas favoritos</span> <em class="field-hint" data-i18n="themesHint">usados na busca por tema (LoremFlickr)</em></span>
+          <div id="themes-list" class="themes-list"></div>
+        </div>
+
         <div class="field field-row">
           <div class="field-row-text">
             <strong data-i18n="bookmarksTitle">Barra de favoritos</strong>

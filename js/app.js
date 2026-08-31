@@ -90,6 +90,22 @@ const I18N = {
     changeQuote: "Trocar frase",
     removeZone: "Remover",
     folder: "Pasta",
+    photoSection: "Foto de fundo",
+    providerAuto: "Automático (com fallback)",
+    checking: "verificando...",
+    online: "online",
+    offline: "fora do ar",
+    favoriteThemes: "Temas favoritos",
+    themesHint: "usados na busca por tema (LoremFlickr)",
+    theme_nature: "Natureza",
+    theme_mountains: "Montanhas",
+    theme_beach: "Praia",
+    theme_forest: "Floresta",
+    theme_city: "Cidade",
+    theme_sky: "Céu",
+    theme_snow: "Neve",
+    theme_sunset: "Pôr do sol",
+    theme_animals: "Animais",
     greetings: ["Boa madrugada", "Bom dia", "Boa tarde", "Boa noite"],
     quotes: QUOTES_PT
   },
@@ -133,6 +149,22 @@ const I18N = {
     changeQuote: "Change quote",
     removeZone: "Remove",
     folder: "Folder",
+    photoSection: "Background photo",
+    providerAuto: "Automatic (with fallback)",
+    checking: "checking...",
+    online: "online",
+    offline: "offline",
+    favoriteThemes: "Favorite themes",
+    themesHint: "used for theme search (LoremFlickr)",
+    theme_nature: "Nature",
+    theme_mountains: "Mountains",
+    theme_beach: "Beach",
+    theme_forest: "Forest",
+    theme_city: "City",
+    theme_sky: "Sky",
+    theme_snow: "Snow",
+    theme_sunset: "Sunset",
+    theme_animals: "Animals",
     greetings: ["Good night", "Good morning", "Good afternoon", "Good evening"],
     quotes: QUOTES_EN
   }
@@ -312,6 +344,91 @@ async function updateWeather(force = false) {
   }
 }
 
+// ---------- Provedores de foto ----------
+const THEMES = ["nature", "mountains", "beach", "forest", "city", "sky", "snow", "sunset", "animals"];
+const DEFAULT_THEMES = ["nature", "mountains"];
+
+function preload(url, timeout = 12000) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const timer = setTimeout(() => {
+      img.src = "";
+      reject(new Error("timeout"));
+    }, timeout);
+    img.onload = () => {
+      clearTimeout(timer);
+      resolve(url);
+    };
+    img.onerror = () => {
+      clearTimeout(timer);
+      reject(new Error("erro ao carregar"));
+    };
+    img.src = url;
+  });
+}
+
+const PROVIDERS = {
+  bing: {
+    nome: "Bing Wallpaper",
+    async url() {
+      const idx = Math.floor(Math.random() * 8);
+      const mkt = lang === "en" ? "en-US" : "pt-BR";
+      const res = await fetch(
+        `https://www.bing.com/HPImageArchive.aspx?format=js&idx=${idx}&n=1&mkt=${mkt}`,
+        { signal: AbortSignal.timeout(8000) }
+      );
+      const data = await res.json();
+      return "https://www.bing.com" + data.images[0].urlbase + "_1920x1080.jpg";
+    },
+    async ping() {
+      await preload(await this.url(), 8000);
+    }
+  },
+  picsum: {
+    nome: "Picsum",
+    async url() {
+      const id = PHOTO_IDS[Math.floor(Math.random() * PHOTO_IDS.length)];
+      return `https://picsum.photos/id/${id}/1920/1080`;
+    },
+    async ping() {
+      await preload(`https://picsum.photos/id/1015/60/40?t=${Date.now()}`, 7000);
+    }
+  },
+  flickr: {
+    nome: "LoremFlickr",
+    async url() {
+      const temas = store.get("themes", DEFAULT_THEMES);
+      const tema = temas.length ? temas[Math.floor(Math.random() * temas.length)] : "nature";
+      return `https://loremflickr.com/1920/1080/${encodeURIComponent(tema)}?lock=${Math.floor(Math.random() * 1e6)}`;
+    },
+    async ping() {
+      await preload(`https://loremflickr.com/60/40/nature?lock=${Date.now() % 1e6}`, 7000);
+    }
+  }
+};
+
+const PROVIDER_ORDER = ["bing", "picsum", "flickr"];
+
+// Tenta o provedor escolhido e cai para os demais se falhar
+async function resolvePhoto() {
+  const escolha = store.get("provider", "auto");
+  const ordem =
+    escolha === "auto" || !PROVIDERS[escolha]
+      ? PROVIDER_ORDER
+      : [escolha, ...PROVIDER_ORDER.filter((p) => p !== escolha)];
+
+  for (const nome of ordem) {
+    try {
+      const url = await PROVIDERS[nome].url();
+      await preload(url);
+      return { url, provider: nome };
+    } catch {
+      // provedor indisponivel: tenta o proximo
+    }
+  }
+  return null;
+}
+
 // ---------- Fundo (crossfade entre duas camadas) ----------
 let bgActive = 0;
 
@@ -342,15 +459,24 @@ function showBackground(url, instant = false) {
   img.src = url;
 }
 
-function setBackground(force = false) {
-  let saved = store.get("photo", null);
-  if (force || !saved || saved.date !== todayKey()) {
-    const pool = PHOTO_IDS.filter((id) => !saved || id !== saved.id);
-    const id = pool[Math.floor(Math.random() * pool.length)];
-    saved = { id, date: todayKey() };
-    store.set("photo", saved);
+async function setBackground(force = false) {
+  const saved = store.get("photo", null);
+
+  // Foto do dia ja resolvida: mostra instantaneamente (cache do navegador)
+  if (!force && saved && saved.url && saved.date === todayKey()) {
+    try {
+      await preload(saved.url);
+      showBackground(saved.url, true);
+      return;
+    } catch {
+      // foto do dia falhou (provedor caiu): resolve outra abaixo
+    }
   }
-  showBackground(`https://picsum.photos/id/${saved.id}/1920/1080`, !force);
+
+  const foto = await resolvePhoto();
+  if (!foto) return; // todos os provedores fora: mantem o gradiente
+  store.set("photo", { url: foto.url, provider: foto.provider, date: todayKey() });
+  showBackground(foto.url, false);
 }
 
 // ---------- Citação ----------
@@ -795,6 +921,55 @@ function bindCitySearch() {
   });
 }
 
+// ---------- Temas favoritos e status dos provedores ----------
+let themesDraft = [];
+
+function renderThemesDraft() {
+  const box = $("themes-list");
+  box.innerHTML = "";
+  THEMES.forEach((k) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "theme-chip" + (themesDraft.includes(k) ? " on" : "");
+    b.textContent = t("theme_" + k);
+    b.addEventListener("click", () => {
+      const i = themesDraft.indexOf(k);
+      if (i >= 0) themesDraft.splice(i, 1);
+      else themesDraft.push(k);
+      renderThemesDraft();
+    });
+    box.appendChild(b);
+  });
+}
+
+async function checarProvedores() {
+  const box = $("providers-status");
+  box.innerHTML = "";
+  PROVIDER_ORDER.forEach((nome) => {
+    const row = document.createElement("div");
+    row.className = "provider-row";
+    row.dataset.p = nome;
+    row.innerHTML = `<span class="dot wait"></span><span></span><em>${t("checking")}</em>`;
+    row.querySelector("span:nth-of-type(2)").textContent = PROVIDERS[nome].nome;
+    box.appendChild(row);
+  });
+
+  await Promise.all(
+    PROVIDER_ORDER.map(async (nome) => {
+      const row = box.querySelector(`[data-p="${nome}"]`);
+      if (!row) return;
+      try {
+        await PROVIDERS[nome].ping();
+        row.querySelector(".dot").className = "dot ok";
+        row.querySelector("em").textContent = t("online");
+      } catch {
+        row.querySelector(".dot").className = "dot bad";
+        row.querySelector("em").textContent = t("offline");
+      }
+    })
+  );
+}
+
 // ---------- Configurações ----------
 function bindSettings() {
   const modal = $("settings-modal");
@@ -806,9 +981,13 @@ function bindSettings() {
     $("set-city").value = city.name;
     $("set-city-status").textContent = "";
     $("set-bookmarks").checked = store.get("showBookmarks", true);
+    $("set-provider").value = store.get("provider", "auto");
     $("zone-input").value = "";
     zonesDraft = store.get("zones", DEFAULTS.zones).map((z) => ({ ...z }));
     renderZonesDraft();
+    themesDraft = [...store.get("themes", DEFAULT_THEMES)];
+    renderThemesDraft();
+    checarProvedores();
     selectedCity = null;
     hideCityResults();
     $("zone-results").classList.add("hidden");
@@ -842,6 +1021,14 @@ function bindSettings() {
     store.set("zones", zonesDraft);
     store.set("showBookmarks", $("set-bookmarks").checked);
 
+    const provedorAntes = store.get("provider", "auto");
+    const temasAntes = JSON.stringify(store.get("themes", DEFAULT_THEMES));
+    store.set("provider", $("set-provider").value);
+    store.set("themes", themesDraft);
+    const fotoMudou =
+      $("set-provider").value !== provedorAntes ||
+      JSON.stringify(themesDraft) !== temasAntes;
+
     const novoIdioma = $("set-lang").value;
     if (novoIdioma !== lang && I18N[novoIdioma]) {
       lang = novoIdioma;
@@ -855,6 +1042,7 @@ function bindSettings() {
     renderTasks();
     renderBookmarksBar();
     updateWeather(true);
+    if (fotoMudou) setBackground(true);
     modal.classList.add("hidden");
   });
 }
